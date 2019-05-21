@@ -22,12 +22,14 @@ workflow "Test" {
 
 action "run tests" {
   uses = "docker://golang:latest"
-  runs = "go test -race -coverprofile=coverage.txt -covermode=atomic"
+  runs = "go"
+  args = "test -race -coverprofile=coverage.txt -covermode=atomic"
 }
 
 action "send coverage to codecov" {
-  uses = "docker://golang:latest"
+  uses = "docker://ubuntu:latest"
   needs = ["run tests"]
-  runs = "bash <(curl -s https://codecov.io/bash)"
+  runs = "bash"
+  args = "<(curl -s https://codecov.io/bash)"
   secrets = ["CODECOV_TOKEN"]
 }
