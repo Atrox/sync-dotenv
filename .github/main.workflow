@@ -27,9 +27,7 @@ action "run tests" {
 }
 
 action "send coverage to codecov" {
-  uses = "docker://ubuntu:latest"
-  needs = ["run tests"]
-  runs = "bash"
-  args = "<(curl -s https://codecov.io/bash)"
+  uses = "Atrox/codecov-action@v0.1.0"
   secrets = ["CODECOV_TOKEN"]
+  needs = ["run tests"]
 }
