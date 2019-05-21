@@ -27,7 +27,7 @@ action "run tests" {
 }
 
 action "send coverage to codecov" {
-  uses = "Atrox/codecov-action@v0.1.0"
+  uses = "Atrox/codecov-action@v0.1.1"
   secrets = ["CODECOV_TOKEN"]
   needs = ["run tests"]
 }
