@@ -49,6 +49,13 @@ Flags:
   -w, --watch            watch for file changes and update the example file automatically
 ```
 
+## Jetbrains IDE
+
+<img align="right" height="200" src="/assets/jetbrains.png?raw=true">
+
+You can automatically call `sync-dotenv` via [File Watchers](https://plugins.jetbrains.com/plugin/7177-file-watchers). Enable the plugin, import the [following XML](/assets/watchers.xml) and your `.env.example` now automatically updates if you change your `.env` file.
+<br><br>
+
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:

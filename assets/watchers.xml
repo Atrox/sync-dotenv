@@ -1,0 +1,22 @@
+<TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="env" />
+    <option name="immediateSync" value="true" />
+    <option name="name" value="sync-dotenv" />
+    <option name="output" value="$ProjectFileDir$/.env.example" />
+    <option name="outputFilters">
+      <array />
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="sync-dotenv" />
+    <option name="runOnExternalChanges" value="true" />
+    <option name="scopeName" value="All Places" />
+    <option name="trackOnlyRoot" value="false" />
+    <option name="workingDir" value="$ProjectFileDir$" />
+    <envs />
+  </TaskOptions>
+</TaskOptions>
