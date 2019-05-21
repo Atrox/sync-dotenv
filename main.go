@@ -3,16 +3,20 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
 
 var (
+	fs = afero.NewOsFs()
+
 	basePath        string
 	envFilePath     string
 	exampleFilePath string
@@ -63,7 +67,7 @@ func run(_ *cobra.Command, _ []string) error {
 	if watch {
 		return watchFile()
 	} else {
-		return processFile()
+		return startSync()
 	}
 }
 
@@ -85,7 +89,7 @@ func watchFile() error {
 
 				if event.Name == filepath.Base(envFilePath) &&
 					(event.Op&fsnotify.Write == fsnotify.Write || event.Op&fsnotify.Create == fsnotify.Create) {
-					if err := processFile(); err != nil {
+					if err := startSync(); err != nil {
 						errChan <- errors.Wrap(err, "failed to process file while watching for changes")
 						return
 					}
@@ -108,26 +112,37 @@ func watchFile() error {
 	return <-errChan
 }
 
-func processFile() error {
-	envFile, err := os.Open(envFilePath)
+func startSync() error {
+	envFile, err := fs.Open(envFilePath)
 	if err != nil {
 		return errors.Wrap(err, "could not open env file")
 	}
 	defer envFile.Close()
 
-	entries := map[string]string{}
-	if !fileNotExist(exampleFilePath) {
-		entries, err = getEntriesFromFile(exampleFilePath)
-		if err != nil {
-			return errors.Wrap(err, "could not get entries from example file")
-		}
-	}
-
-	exampleEnvFile, err := os.Create(exampleFilePath)
+	exampleEnvFile, err := fs.OpenFile(exampleFilePath, os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		return errors.Wrap(err, "could not open example env file")
 	}
 	defer exampleEnvFile.Close()
+
+	return processFile(envFile, exampleEnvFile)
+}
+
+func processFile(envFile afero.File, exampleEnvFile afero.File) error {
+	entries, err := getEntriesFromFile(exampleEnvFile)
+	if err != nil {
+		return errors.Wrap(err, "could not get entries from example file")
+	}
+
+	err = exampleEnvFile.Truncate(0)
+	if err != nil {
+		return errors.Wrap(err, "failed to truncate example env file")
+	}
+
+	_, err = exampleEnvFile.Seek(0, 0)
+	if err != nil {
+		return errors.Wrap(err, "failed to seek example env file")
+	}
 
 	scanner := bufio.NewScanner(envFile)
 	writer := bufio.NewWriter(exampleEnvFile)
@@ -168,13 +183,7 @@ func mirror(scanner *bufio.Scanner, writer *bufio.Writer, entries map[string]str
 	return nil
 }
 
-func getEntriesFromFile(path string) (map[string]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, errors.Wrap(err, "could not open example file")
-	}
-	defer file.Close()
-
+func getEntriesFromFile(file io.Reader) (map[string]string, error) {
 	m := map[string]string{}
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -198,7 +207,7 @@ func getEntriesFromFile(path string) (map[string]string, error) {
 }
 
 func fileNotExist(path string) bool {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
+	if _, err := fs.Stat(path); os.IsNotExist(err) {
 		return true
 	}
 	return false
