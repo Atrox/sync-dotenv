@@ -1,17 +1,25 @@
 project_name: sync-dotenv
 
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org
+
 before:
   hooks:
     - go mod download
 
 builds:
 - env:
-  - GO111MODULE=on
   - CGO_ENABLED=0
   goos:
   - darwin
   - linux
   - windows
+  goarch:
+  - 386
+  - amd64
+  - arm
+  - arm64
 
 brew:
   github:
@@ -20,8 +28,10 @@ brew:
   commit_author:
     name: atrox
     email: hello@atrox.dev
-  homepage: 'https://atrox.dev'
+  homepage: 'https://github.com/atrox/sync-dotenv'
   description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
+  test: |
+    system "#{bin}/sync-dotenv --version"
 
 scoop:
   bucket:
@@ -30,7 +40,7 @@ scoop:
   commit_author:
     name: atrox
     email: hello@atrox.dev
-  homepage: 'https://atrox.dev'
+  homepage: 'https://github.com/atrox/sync-dotenv'
   description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
   license: MIT
 
@@ -57,3 +67,5 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
+    - Merge pull request
+    - Merge branch
