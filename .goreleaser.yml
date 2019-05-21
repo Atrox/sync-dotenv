@@ -1,0 +1,59 @@
+project_name: sync-dotenv
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+- env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+  goos:
+  - darwin
+  - linux
+  - windows
+
+brew:
+  github:
+    owner: atrox
+    name: homebrew-tap
+  commit_author:
+    name: atrox
+    email: hello@atrox.dev
+  homepage: 'https://atrox.dev'
+  description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
+
+scoop:
+  bucket:
+    owner: atrox
+    name: scoop-bucket
+  commit_author:
+    name: atrox
+    email: hello@atrox.dev
+  homepage: 'https://atrox.dev'
+  description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
+  license: MIT
+
+archives:
+- replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+  format_overrides:
+    - goos: windows
+      format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: '{{ .Tag }}-next'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
