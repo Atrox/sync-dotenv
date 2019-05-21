@@ -47,9 +47,9 @@ func main() {
 
 	if err := rootCmd.Execute(); err != nil {
 		if verbose {
-			fmt.Printf("Error occured: %+v\n", err)
+			fmt.Printf("Error occurred: %+v\n", err)
 		} else {
-			fmt.Printf("Error occured: %s\n", err)
+			fmt.Printf("Error occurred: %s\n", err)
 		}
 
 		os.Exit(1)
