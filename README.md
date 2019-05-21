@@ -26,10 +26,11 @@ Download the pre-compiled binaries from the [releases page](https://github.com/a
 
 ## Usage
 
-By default, `sync-dotenv` looks for a `.env` in your working directory and attempt to sync with .env.example
-(or creates on, if the file does not exist) when no argument is provided.
+`sync-dotenv`, by default, looks for a `.env` file in your working directory and synchronizes those keys with your `.env.example` file.  Values will **not** be synchronized but existing ones in your example file will be kept.
 
-If the flag `--watch` is provided, `sync-dotenv` will watch for changes and automatically update your example file.
+If your files have different names, you can use the flags `--env .secrets` and `--example .secrets.example`.
+
+If the flag `--watch` is provided, `sync-dotenv` will watch for changes in your working directory and automatically updates your example file.
 
 ## CLI
 
