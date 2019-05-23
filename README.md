@@ -1,6 +1,6 @@
 # sync-dotenv
 
-[![Build Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/atrox/sync-dotenv?style=flat-square)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/atrox/sync-dotenv)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fatrox%2Fsync-dotenv%2Fbadge&style=flat-square)](https://actions-badge.atrox.dev/atrox/sync-dotenv/goto)
 [![Coverage Status](https://img.shields.io/codecov/c/github/atrox/sync-dotenv.svg?style=flat-square)](https://codecov.io/gh/Atrox/sync-dotenv)
 [![Go Report Card](https://goreportcard.com/badge/github.com/atrox/sync-dotenv?style=flat-square)](https://goreportcard.com/report/github.com/atrox/sync-dotenv)
 
