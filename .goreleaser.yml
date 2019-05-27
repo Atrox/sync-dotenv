@@ -44,6 +44,16 @@ scoop:
   description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
   license: MIT
 
+nfpms:
+- homepage: 'https://github.com/atrox/sync-dotenv'
+  description: 'sync-dotenv helps you to keep your .env.example in sync with your .env file.'
+  license: MIT
+  maintainer: 'Atrox <hello@atrox.dev>'
+  vendor: 'atrox.dev'
+  formats:
+    - deb
+    - rpm
+
 archives:
 - replacements:
     darwin: Darwin

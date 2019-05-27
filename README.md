@@ -1,5 +1,6 @@
 # sync-dotenv
 
+[![Release](https://img.shields.io/github/release/atrox/sync-dotenv.svg?style=flat-square)](https://github.com/atrox/sync-dotenv/releases/latest)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fatrox%2Fsync-dotenv%2Fbadge&style=flat-square)](https://actions-badge.atrox.dev/atrox/sync-dotenv/goto)
 [![Coverage Status](https://img.shields.io/codecov/c/github/atrox/sync-dotenv.svg?style=flat-square)](https://codecov.io/gh/Atrox/sync-dotenv)
 [![Go Report Card](https://goreportcard.com/badge/github.com/atrox/sync-dotenv?style=flat-square)](https://goreportcard.com/report/github.com/atrox/sync-dotenv)
@@ -18,6 +19,10 @@ brew install atrox/tap/sync-dotenv
 scoop bucket add sync-dotenv https://github.com/atrox/scoop-bucket
 scoop install sync-dotenv
 ```
+
+### Linux (deb/rpm)
+
+Download the `.deb` or `.rpm` from the [releases page](https://github.com/atrox/sync-dotenv/releases) and install with `dpkg -i` and `rpm -i` respectively.
 
 ### Manually
 
