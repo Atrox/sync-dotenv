@@ -1,0 +1,20 @@
+on: push
+name: test
+
+jobs:
+  runTests:
+    name: run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: run tests
+        uses: docker://golang:latest
+        with:
+          entrypoint: go
+          args: test -race -coverprofile=coverage.txt -covermode=atomic
+
+      - name: send coverage to codecov
+        uses: Atrox/codecov-action@v0.1.2
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
