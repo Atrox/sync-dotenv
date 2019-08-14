@@ -1,10 +1,13 @@
-name: push
+name: release
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - v*
 
 jobs:
   tests:
-    name: run tests
+    name: run tests and build release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -19,3 +22,10 @@ jobs:
         uses: Atrox/codecov-action@v0.1.3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: goreleaser
+        uses: docker://goreleaser/goreleaser
+        env:
+          GORELEASER_GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
+        with:
+          args: release
