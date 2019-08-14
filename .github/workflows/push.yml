@@ -1,0 +1,37 @@
+on: push
+name: test
+
+jobs:
+  tests:
+    name: run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: run tests
+        uses: docker://golang:latest
+        with:
+          entrypoint: go
+          args: test -race -coverprofile=coverage.txt -covermode=atomic
+
+      - name: send coverage to codecov
+        uses: Atrox/codecov-action@v0.1.3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  release:
+    name: build release
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - name: only tags
+        uses: actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da
+        with:
+          args: tag
+
+      - name: goreleaser
+        uses: docker://goreleaser/goreleaser
+        env:
+          GORELEASER_GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
+        with:
+          args: release
