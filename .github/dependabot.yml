@@ -6,8 +6,3 @@ updates:
     interval: daily
     time: "12:00"
     timezone: Etc/UTC
-  open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: github.com/spf13/afero
-    versions:
-    - 1.5.1
